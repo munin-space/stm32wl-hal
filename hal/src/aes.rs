@@ -397,7 +397,6 @@ impl Aes {
         const ALGO: Algorithm = Algorithm::Gcm;
         const CHMOD2: bool = ALGO.chmod2();
         const CHMOD10: u8 = ALGO.chmod10();
-        let swap = self.swap_mode.bits();
 
         #[rustfmt::skip]
         self.aes.cr.write(|w|
@@ -444,7 +443,6 @@ impl Aes {
         const ALGO: Algorithm = Algorithm::Gcm;
         const CHMOD2: bool = ALGO.chmod2();
         const CHMOD10: u8 = ALGO.chmod10();
-        let swap = self.swap_mode.bits();
 
         // init phase
         let keysize: KeySize = self.gcm_init_phase::<MODE>(key, iv)?;
@@ -512,7 +510,6 @@ impl Aes {
         const ALGO: Algorithm = Algorithm::Gcm;
         const CHMOD2: bool = ALGO.chmod2();
         const CHMOD10: u8 = ALGO.chmod10();
-        let swap = self.swap_mode.bits();
 
         // init phase
         let keysize: KeySize = self.gcm_init_phase::<MODE>(key, iv)?;
@@ -614,7 +611,6 @@ impl Aes {
         const MODE: u8 = Mode::Encryption.bits();
 
         let keysize: KeySize = self.set_key(key);
-        let swap = self.swap_mode.bits();
 
         #[rustfmt::skip]
         self.aes.cr.write(|w|
@@ -672,7 +668,6 @@ impl Aes {
         const MODE: u8 = Mode::Encryption.bits();
 
         let keysize: KeySize = self.set_key(key);
-        let swap = self.swap_mode.bits();
 
         #[rustfmt::skip]
         self.aes.cr.write(|w|
@@ -822,7 +817,6 @@ impl Aes {
         const MODE: u8 = Mode::KeyDerivationDecryption.bits();
 
         let keysize: KeySize = self.set_key(key);
-        let swap = self.swap_mode.bits();
 
         #[rustfmt::skip]
         self.aes.cr.write(|w|
@@ -879,7 +873,6 @@ impl Aes {
         const CHMOD10: u8 = ALGO.chmod10();
         const MODE: u8 = Mode::KeyDerivationDecryption.bits();
         let keysize: KeySize = self.set_key(key);
-        let swap = self.swap_mode.bits();
 
         #[rustfmt::skip]
         self.aes.cr.write(|w|
