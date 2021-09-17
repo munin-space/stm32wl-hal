@@ -2,6 +2,7 @@
 
 use crate::pac;
 use core::mem::size_of;
+pub use pac::aes::cr::DATATYPE_A as SwapMode;
 use pac::aes::cr::KEYSIZE_A as KeySize;
 
 /// Algorithm modes.
@@ -122,7 +123,7 @@ impl Aes {
 
         Aes {
             aes,
-            swap_mode: SwapMode::NoSwap,
+            swap_mode: SwapMode::NONE,
         }
     }
 
@@ -239,7 +240,7 @@ impl Aes {
         let dp: pac::Peripherals = pac::Peripherals::steal();
         Aes {
             aes: dp.AES,
-            swap_mode: SwapMode::NoSwap,
+            swap_mode: SwapMode::NONE,
         }
     }
 
@@ -381,7 +382,6 @@ impl Aes {
         const CHMOD10: u8 = ALGO.chmod10();
 
         let keysize: KeySize = self.set_key(key);
-        let swap = self.swap_mode.bits();
 
         self.aes.ivr0.write(|w| w.ivi().bits(2));
         self.aes.ivr1.write(|w| w.ivi().bits(iv[2]));
@@ -391,7 +391,7 @@ impl Aes {
         self.aes.cr.write(|w|
             w
                 .en().enabled()
-                .datatype().bits(swap)
+                .datatype().variant(self.swap_mode)
                 .mode().bits(MODE)
                 .chmod2().bit(CHMOD2)
                 .chmod().bits(CHMOD10)
@@ -425,7 +425,7 @@ impl Aes {
         self.aes.cr.write(|w|
             w
                 .en().enabled()
-                .datatype().bits(swap)
+                .datatype().variant(self.swap_mode)
                 .mode().bits(MODE)
                 .chmod2().bit(CHMOD2)
                 .chmod().bits(CHMOD10)
@@ -477,7 +477,7 @@ impl Aes {
             self.aes.cr.write(|w|
                 w
                     .en().enabled()
-                    .datatype().bits(swap)
+                    .datatype().variant(self.swap_mode)
                     .mode().bits(MODE)
                     .chmod2().bit(CHMOD2)
                     .chmod().bits(CHMOD10)
@@ -501,7 +501,7 @@ impl Aes {
             self.aes.cr.write(|w|
                 w
                     .en().enabled()
-                    .datatype().bits(swap)
+                    .datatype().variant(self.swap_mode)
                     .mode().bits(MODE)
                     .chmod2().bit(CHMOD2)
                     .chmod().bits(CHMOD10)
@@ -545,7 +545,7 @@ impl Aes {
             self.aes.cr.write(|w|
                 w
                     .en().enabled()
-                    .datatype().bits(swap)
+                    .datatype().variant(self.swap_mode)
                     .mode().bits(MODE)
                     .chmod2().bit(CHMOD2)
                     .chmod().bits(CHMOD10)
@@ -569,7 +569,7 @@ impl Aes {
             self.aes.cr.write(|w|
                 w
                     .en().enabled()
-                    .datatype().bits(swap)
+                    .datatype().variant(self.swap_mode)
                     .mode().bits(MODE)
                     .chmod2().bit(CHMOD2)
                     .chmod().bits(CHMOD10)
@@ -642,7 +642,7 @@ impl Aes {
         self.aes.cr.write(|w|
             w
                 .en().enabled()
-                .datatype().bits(swap)
+                .datatype().variant(self.swap_mode)
                 .mode().bits(MODE)
                 .chmod2().bit(CHMOD2)
                 .chmod().bits(CHMOD10)
@@ -700,7 +700,7 @@ impl Aes {
         self.aes.cr.write(|w|
             w
                 .en().enabled()
-                .datatype().bits(swap)
+                .datatype().variant(self.swap_mode)
                 .mode().bits(MODE)
                 .chmod2().bit(CHMOD2)
                 .chmod().bits(CHMOD10)
@@ -850,7 +850,7 @@ impl Aes {
         self.aes.cr.write(|w|
             w
                 .en().enabled()
-                .datatype().bits(swap)
+                .datatype().variant(self.swap_mode)
                 .mode().bits(MODE)
                 .chmod2().bit(CHMOD2)
                 .chmod().bits(CHMOD10)
@@ -907,7 +907,7 @@ impl Aes {
         self.aes.cr.write(|w|
             w
                 .en().enabled()
-                .datatype().bits(swap)
+                .datatype().variant(self.swap_mode)
                 .mode().bits(MODE)
                 .chmod2().bit(CHMOD2)
                 .chmod().bits(CHMOD10)
